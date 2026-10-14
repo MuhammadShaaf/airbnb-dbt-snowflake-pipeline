@@ -1,0 +1,190 @@
+version: 2
+
+models:
+  - name: silver_bookings
+    description: >
+      Cleaned Airbnb bookings with standardized statuses,
+      financial calculations, stay categories and quality flags.
+
+    columns:
+      - name: BOOKING_ID
+        description: Unique identifier for a booking.
+        data_tests:
+          - not_null
+          - unique
+
+      - name: LISTING_ID
+        description: Listing associated with the booking.
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('silver_listings')
+                field: LISTING_ID
+              config:
+                severity: warn
+
+      - name: BOOKING_DATE
+        description: Date associated with the booking.
+        data_tests:
+          - not_null
+
+      - name: NIGHTS_BOOKED
+        description: Number of nights booked.
+        data_tests:
+          - not_null
+
+      - name: BOOKING_STATUS_CATEGORY
+        description: Standardized booking status.
+        data_tests:
+          - accepted_values:
+              arguments:
+                values:
+                  - CONFIRMED
+                  - CANCELLED
+                  - UNKNOWN
+
+      - name: STAY_CATEGORY
+        description: Booking classification by duration.
+        data_tests:
+          - accepted_values:
+              arguments:
+                values:
+                  - SHORT_STAY
+                  - MEDIUM_STAY
+                  - LONG_STAY
+                  - INVALID_STAY
+
+      - name: DATA_QUALITY_STATUS
+        description: First detected data quality issue, or VALID.
+        data_tests:
+          - accepted_values:
+              arguments:
+                values:
+                  - VALID
+                  - MISSING_BOOKING_ID
+                  - MISSING_LISTING_ID
+                  - INVALID_BOOKING_DATE
+                  - INVALID_NIGHTS
+                  - INVALID_BOOKING_AMOUNT
+                  - INVALID_FEE
+                  - INVALID_BOOKING_STATUS
+
+      - name: TOTAL_AMOUNT
+        description: Accommodation subtotal plus booking fees.
+        data_tests:
+          - not_null
+
+  - name: silver_host
+    description: >
+      Cleaned host records with standardized names,
+      response-rate classifications and quality flags.
+
+    columns:
+      - name: HOST_ID
+        description: Unique identifier for a host.
+        data_tests:
+          - not_null
+          - unique
+
+      - name: HOST_NAME
+        description: Standardized host name.
+        data_tests:
+          - not_null
+
+      - name: RESPONSE_RATE_QUALITY
+        description: Classification of host response rate.
+        data_tests:
+          - accepted_values:
+              arguments:
+                values:
+                  - VERY GOOD
+                  - GOOD
+                  - FAIR
+                  - POOR
+                  - UNKNOWN
+
+      - name: DATA_QUALITY_STATUS
+        description: Host data quality classification.
+        data_tests:
+          - accepted_values:
+              arguments:
+                values:
+                  - VALID
+                  - MISSING_HOST_ID
+                  - MISSING_HOST_NAME
+                  - INVALID_RESPONSE_RATE
+
+  - name: silver_listings
+    description: >
+      Cleaned and standardized Airbnb listings with deduplication,
+      enforced data types, price metrics and quality flags.
+
+    columns:
+      - name: LISTING_ID
+        description: Unique identifier for a listing.
+        data_tests:
+          - not_null
+          - unique
+
+      - name: HOST_ID
+        description: Host who owns the listing.
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('silver_host')
+                field: HOST_ID
+              config:
+                severity: warn
+
+      - name: PROPERTY_TYPE
+        description: Standardized property type.
+        data_tests:
+          - accepted_values:
+              arguments:
+                values:
+                  - HOUSE
+                  - CONDO
+                  - APARTMENT
+
+      - name: ROOM_TYPE
+        description: Standardized room type.
+        data_tests:
+          - accepted_values:
+              arguments:
+                values:
+                  - ENTIRE HOME
+                  - PRIVATE ROOM
+
+      - name: PRICE_PER_NIGHT
+        description: Nightly price of the listing.
+        data_tests:
+          - not_null
+
+      - name: PRICE_CATEGORY
+        description: Price tier based on nightly price.
+        data_tests:
+          - accepted_values:
+              arguments:
+                values:
+                  - BUDGET
+                  - STANDARD
+                  - PREMIUM
+                  - UNKNOWN
+
+      - name: DATA_QUALITY_STATUS
+        description: First detected data quality issue, or VALID.
+        data_tests:
+          - accepted_values:
+              arguments:
+                values:
+                  - VALID
+                  - MISSING_LISTING_ID
+                  - MISSING_HOST_ID
+                  - MISSING_PROPERTY_TYPE
+                  - MISSING_ROOM_TYPE
+                  - INVALID_PRICE
+                  - INVALID_CAPACITY
+                  - INVALID_ROOM_COUNT
+                  - BEDROOMS_EXCEED_CAPACITY

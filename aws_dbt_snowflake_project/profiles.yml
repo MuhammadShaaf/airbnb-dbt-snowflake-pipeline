@@ -1,0 +1,50 @@
+aws_dbt_snowflake_project:
+  outputs:
+    dev:
+      account: KWIMGJT-ZN09519
+      database: AIRBNB
+      password: '!Shaafashraf009@'
+      role: ACCOUNTADMIN
+      schema: dbt_schema
+      threads: 1
+      type: snowflake
+      user: MUHAMMADSHAAF
+      warehouse: COMPUTE_WH
+  target: dev
+custom_postgres:
+  outputs:
+    dev:
+      dbname: destination_db
+      host: destination_postgres
+      pass: secret
+      port: 5432
+      schema: public
+      threads: 1
+      type: postgres
+      user: postgres
+  target: dev
+jaffle_shop:
+  outputs:
+    dev:
+      database: destination_db
+      host: localhost
+      password: secret
+      port: 5434
+      schema: public
+      threads: 1
+      type: postgres
+      user: postgres
+  target: dev
+netflix:
+  outputs:
+    dev:
+      account: WVXHIYJ-NN12219
+      database: MOVIELENS
+      password: dbtPassword123
+      role: TRANSFORM
+      schema: DEV
+      threads: 1
+      type: snowflake
+      user: dbt
+      warehouse: COMPUTE_WH
+  target: dev
