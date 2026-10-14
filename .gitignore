@@ -5,6 +5,16 @@ build/
 dist/
 wheels/
 *.egg-info
+target/
+dbt_packages/
+logs/
+.user.yml
+profiles.yml
+.env
+.venv/
+__pycache__/
 
 # Virtual environments
 .venv
+
+
