@@ -1,4 +1,3 @@
-
 {{
     config(
         materialized='incremental',
@@ -18,7 +17,7 @@ WITH source AS (
         CLEANING_FEE,
         SERVICE_FEE,
         {{ normalize_status('BOOKING_STATUS') }} AS BOOKING_STATUS,
-        CREATED_AT,
+        CREATED_AT
 
     FROM {{ ref('bronze_bookings') }}
 
@@ -49,24 +48,20 @@ transformed AS (
         BOOKING_STATUS,
         CREATED_AT,
 
-        -- Accommodation subtotal
-        {{ multiply(
-            'NIGHTS_BOOKED',
-            'BOOKING_AMOUNT',
-            2
-        ) }} AS ACCOMMODATION_AMOUNT,
+        -- Accommodation subtotal (BOOKING_AMOUNT is already the full stay price)
+        ROUND(BOOKING_AMOUNT, 2) AS ACCOMMODATION_AMOUNT,
 
         -- Total fees
         COALESCE(CLEANING_FEE, 0)
             + COALESCE(SERVICE_FEE, 0) AS TOTAL_FEES,
 
         -- Complete booking value
-        {{ calculate_booking_total(
-            'NIGHTS_BOOKED',
-            'BOOKING_AMOUNT',
-            'CLEANING_FEE',
-            'SERVICE_FEE'
-        ) }} AS TOTAL_AMOUNT,
+        ROUND(
+            BOOKING_AMOUNT
+            + COALESCE(CLEANING_FEE, 0)
+            + COALESCE(SERVICE_FEE, 0),
+            2
+        ) AS TOTAL_AMOUNT,
 
         -- Length of stay
         CASE
@@ -84,15 +79,15 @@ transformed AS (
             ELSE 'UNKNOWN'
         END AS BOOKING_STATUS_CATEGORY,
 
-        -- Simplified confirmed-booking revenue measure
+        -- Confirmed-booking revenue
         CASE
             WHEN BOOKING_STATUS = 'CONFIRMED'
-                THEN {{ calculate_booking_total(
-                    'NIGHTS_BOOKED',
-                    'BOOKING_AMOUNT',
-                    'CLEANING_FEE',
-                    'SERVICE_FEE'
-                ) }}
+                THEN ROUND(
+                    BOOKING_AMOUNT
+                    + COALESCE(CLEANING_FEE, 0)
+                    + COALESCE(SERVICE_FEE, 0),
+                    2
+                )
             ELSE 0
         END AS CONFIRMED_BOOKING_REVENUE,
 
