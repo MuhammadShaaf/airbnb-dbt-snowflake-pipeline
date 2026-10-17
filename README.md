@@ -219,7 +219,7 @@ dbt build      # run models, snapshots and tests in dependency order
 
 To view the lineage graph, run `dbt docs generate` and then `dbt docs serve`.
 
-![dbt lineage](docs/dbt_lineage.png)
+![dbt lineage](docs/dbt-dag.png)
 
 ### 5. Open the report
 Open `powerbi/Airbnb_Dashboard.pbix` in Power BI Desktop, apply the theme from `powerbi/airbnb_analytics_theme.json` (Design → Themes → Browse for themes), point the Snowflake connection at your account and refresh.
