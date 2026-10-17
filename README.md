@@ -106,17 +106,17 @@ The Power BI report contains three pages and uses the dbt gold layer through sur
 ### Executive Overview
 KPI cards (revenue, bookings, average booking value, average stay, cancellation rate), monthly revenue and cancellation trends, revenue by property type, stay length and booking status.
 
-![Executive Overview](powerbi/screenshots/01_executive_overview-1.png)
+![Executive Overview](powerbi/screenshots/01_executive_overview.png)
 
 ### Listing Performance
 Top 10 listings by revenue, bookings by price tier, price versus bookings, revenue by property and room type, and revenue by number of bedrooms.
 
-![Listing Performance](powerbi/screenshots/02_listing_performance-1.png)
+![Listing Performance](powerbi/screenshots/02_listing_performance.png)
 
 ### Host Performance
 Active hosts, superhost share, response rate, revenue per host by join year, response quality and host type, and the top 10 hosts by revenue.
 
-![Host Performance](powerbi/screenshots/03_host_performance-1.png)
+![Host Performance](powerbi/screenshots/03_host_performance.png)
 
 ### Key DAX measures
 ```
@@ -238,4 +238,4 @@ Open `powerbi/Airbnb_Dashboard.pbix` in Power BI Desktop, apply the theme from `
 - Publish dbt docs to GitHub Pages
 
 ## Author
-**Muhammad Shaaf** · [GitHub](https://github.com/MuhammadShaaf) · [LinkedIn]([https://www.linkedin.com/in/your-profile](https://www.linkedin.com/in/muhammad-shaaf/])
+**Muhammad Shaaf** · [GitHub](https://github.com/MuhammadShaaf) · [LinkedIn]([https://www.linkedin.com/in/your-profile](https://www.linkedin.com/in/muhammad-shaaf/))
