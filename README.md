@@ -238,4 +238,4 @@ Open `powerbi/Airbnb_Dashboard.pbix` in Power BI Desktop, apply the theme from `
 - Publish dbt docs to GitHub Pages
 
 ## Author
-**Muhammad Shaaf** · [GitHub](https://github.com/MuhammadShaaf) · [LinkedIn]([https://www.linkedin.com/in/your-profile](https://www.linkedin.com/in/muhammad-shaaf/))
+**Muhammad Shaaf** · [GitHub](https://github.com/MuhammadShaaf) · [LinkedIn]([https://www.linkedin.com/in/your-profile](https://www.linkedin.com/in/muhammad-shaaf/])
